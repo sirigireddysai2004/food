@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Palate — Food & Flavors</title>
+
+  <style>
+    /* =========================
+       COLOR PALETTE
+    ========================== */
+    :root {
+      --cream: #fff8ed;
+      --ivory: #fffdf8;
+      --terracotta: #d95d39;
+      --orange: #f28c28;
+      --mustard: #e9b949;
+      --sage: #718355;
+      --dark-green: #344e41;
+      --brown: #6b4226;
+      --dark: #252525;
+      --white: #ffffff;
+      --shadow: 0 12px 35px rgba(80, 55, 30, 0.12);
+      --radius: 20px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    /* =========================
+       HEADER
+    ========================== */
+    header {
+      background: rgba(255, 248, 237, 0.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(107, 66, 38, 0.08);
+    }
+
+    .navbar {
+      max-width: 1200px;
+      margin: auto;
+      height: 75px;
+      padding: 0 25px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--terracotta);
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: var(--dark-green);
+    }
+
+    nav {
+      display: flex;
+      gap: 30px;
+    }
+
+    nav a {
+      color: var(--dark);
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--terracotta);
+    }
+
+    .cart-btn {
+      border: none;
+      background: var(--dark-green);
+      color: white;
+      padding: 11px 18px;
+      border-radius: 50px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .cart-btn:hover {
+      background: var(--terracotta);
+      transform: translateY(-2px);
+    }
+
+    /* =========================
+       HERO
+    ========================== */
+    .hero {
+      max-width: 1200px;
+      margin: auto;
+      padding: 80px 25px 70px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 50px;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(45px, 6vw, 78px);
+      line-height: 1;
+      margin-bottom: 25px;
+      color: var(--dark-green);
+    }
+
+    .hero-content h1 span {
+      color: var(--terracotta);
+    }
+
+    .hero-content p {
+      max-width: 560px;
+      color: #6c6259;
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      border: none;
+      padding: 15px 25px;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 15px;
+      transition: 0.3s;
+    }
+
+    .primary-btn {
+      background: var(--terracotta);
+      color: white;
+    }
+
+    .primary-btn:hover {
+      background: var(--brown);
+      transform: translateY(-3px);
+    }
+
+    .secondary-btn {
+      background: #f1e3cd;
+      color: var(--brown);
+    }
+
+    .secondary-btn:hover {
+      background: var(--mustard);
+    }
+
+    .hero-image {
+      min-height: 430px;
+      border-radius: 45% 55% 50% 50%;
+      background:
+        linear-gradient(rgba(52, 78, 65, 0.15), rgba(52, 78, 65, 0.15)),
+        url("https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=85");
+      background-size: cover;
+      background-position: center;
+      box-shadow: 25px 25px 0 var(--mustard);
+    }
+
+    /* =========================
+       SECTION
+    ========================== */
+    .section {
+      max-width: 1200px;
+      margin: auto;
+      padding: 80px 25px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-title small {
+      color: var(--terracotta);
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .section-title h2 {
+      font-size: 42px;
+      color: var(--dark-green);
+      margin-top: 5px;
+    }
+
+    /* =========================
+       SEARCH
+    ========================== */
+    .search-container {
+      max-width: 600px;
+      margin: 0 auto 35px;
+      position: relative;
+    }
+
+    .search-container input {
+      width: 100%;
+      padding: 17px 25px;
+      border: 2px solid #eadcc8;
+      border-radius: 50px;
+      background: white;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .search-container input:focus {
+      border-color: var(--orange);
+    }
+
+    /* =========================
+       CATEGORIES
+    ========================== */
+    .categories {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .category {
+      border: none;
+      padding: 10px 20px;
+      border-radius: 50px;
+      background: #f0e4d1;
+      color: var(--brown);
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .category:hover,
+    .category.active {
+      background: var(--dark-green);
+      color: white;
+    }
+
+    /* =========================
+       FOOD GRID
+    ========================== */
+    .food-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+    }
+
+    .food-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: 0.3s;
+    }
+
+    .food-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .food-image {
+      height: 220px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .food-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: 0.5s;
+    }
+
+    .food-card:hover .food-image img {
+      transform: scale(1.08);
+    }
+
+    .badge {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: var(--mustard);
+      color: #503817;
+      padding: 6px 12px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .food-info {
+      padding: 20px;
+    }
+
+    .food-info h3 {
+      color: var(--dark-green);
+      margin-bottom: 7px;
+      font-size: 21px;
+    }
+
+    .food-info p {
+      color: #81766c;
+      font-size: 14px;
+      min-height: 45px;
+    }
+
+    .food-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 18px;
+    }
+
+    .price {
+      color: var(--terracotta);
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .add-btn {
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 50%;
+      background: var(--orange);
+      color: white;
+      font-size: 22px;
+      transition: 0.3s;
+    }
+
+    .add-btn:hover {
+      background: var(--terracotta);
+      transform: rotate(90deg);
+    }
+
+    /* =========================
+       ABOUT
+    ========================== */
+    .about {
+      background: var(--dark-green);
+      color: white;
+    }
+
+    .about-inner {
+      max-width: 1200px;
+      margin: auto;
+      padding: 80px 25px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about-image {
+      height: 420px;
+      border-radius: 30px;
+      background: url("https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=900&q=85");
+      background-size: cover;
+      background-position: center;
+    }
+
+    .about-content small {
+      color: var(--mustard);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: bold;
+    }
+
+    .about-content h2 {
+      font-size: 45px;
+      margin: 10px 0 20px;
+    }
+
+    .about-content p {
+      color: #dce5dc;
+      margin-bottom: 25px;
+    }
+
+    .stats {
+      display: flex;
+      gap: 35px;
+      flex-wrap: wrap;
+    }
+
+    .stat h3 {
+      color: var(--mustard);
+      font-size: 30px;
+    }
+
+    .stat p {
+      margin: 0;
+      font-size: 13px;
+    }
+
+    /* =========================
+       NEWSLETTER
+    ========================== */
+    .newsletter {
+      max-width: 800px;
+      margin: 80px auto;
+      padding: 55px 30px;
+      text-align: center;
+      border-radius: 30px;
+      background: #f2dfbd;
+    }
+
+    .newsletter h2 {
+      color: var(--dark-green);
+      font-size: 35px;
+      margin-bottom: 10px;
+    }
+
+    .newsletter p {
+      color: #725f4e;
+      margin-bottom: 25px;
+    }
+
+    .newsletter-form {
+      display: flex;
+      max-width: 550px;
+      margin: auto;
+      gap: 10px;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      border: none;
+      border-radius: 50px;
+      padding: 15px 20px;
+      outline: none;
+    }
+
+    /* =========================
+       FOOTER
+    ========================== */
+    footer {
+      background: #24382f;
+      color: white;
+      text-align: center;
+      padding: 35px 20px;
+    }
+
+    footer .logo {
+      margin-bottom: 10px;
+    }
+
+    footer p {
+      color: #c8d1cb;
+      font-size: 14px;
+    }
+
+    /* =========================
+       CART MODAL
+    ========================== */
+    .cart-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      display: none;
+      justify-content: flex-end;
+      z-index: 2000;
+    }
+
+    .cart-modal.show {
+      display: flex;
+    }
+
+    .cart-panel {
+      width: min(430px, 100%);
+      height: 100%;
+      background: var(--ivory);
+      padding: 30px;
+      overflow-y: auto;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+      }
+      to {
+        transform: translateX(0);
+      }
+    }
+
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .cart-header h2 {
+      color: var(--dark-green);
+    }
+
+    .close-cart {
+      border: none;
+      background: #f0e2ce;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      font-size: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 15px 0;
+      border-bottom: 1px solid #eadfce;
+    }
+
+    .cart-item img {
+      width: 65px;
+      height: 65px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .cart-item-info {
+      flex: 1;
+    }
+
+    .cart-item-info h4 {
+      color: var(--dark-green);
+    }
+
+    .cart-item-info p {
+      color: var(--terracotta);
+      font-weight: bold;
+    }
+
+    .remove-item {
+      border: none;
+      background: none;
+      color: #b24b35;
+      font-size: 18px;
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 25px;
+      font-size: 22px;
+      font-weight: bold;
+      color: var(--dark-green);
+    }
+
+    .checkout {
+      width: 100%;
+      margin-top: 20px;
+      border: none;
+      padding: 16px;
+      border-radius: 50px;
+      background: var(--terracotta);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .empty-cart {
+      text-align: center;
+      padding: 50px 10px;
+      color: #8b8177;
+    }
+
+    /* =========================
+       TOAST
+    ========================== */
+    .toast {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translate(-50%, 100px);
+      background: var(--dark-green);
+      color: white;
+      padding: 14px 22px;
+      border-radius: 50px;
+      z-index: 3000;
+      opacity: 0;
+      transition: 0.3s;
+    }
+
+    .toast.show {
+      transform: translate(-50%, 0);
+      opacity: 1;
+    }
+
+    /* =========================
+       MOBILE
+    ========================== */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero-content p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+      }
+
+      .hero-image {
+        min-height: 350px;
+      }
+
+      .food-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .about-inner {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 650px) {
+      nav {
+        display: none;
+      }
+
+      .navbar {
+        padding: 0 15px;
+      }
+
+      .hero {
+        padding-top: 55px;
+      }
+
+      .hero-image {
+        min-height: 280px;
+      }
+
+      .section-title h2 {
+        font-size: 34px;
+      }
+
+      .food-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .newsletter-form {
+        flex-direction: column;
+      }
+
+      .newsletter-form button {
+        width: 100%;
+      }
+
+      .about-content h2 {
+        font-size: 36px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       NAVIGATION
+  ========================== -->
+  <header>
+    <div class="navbar">
+
+      <div class="logo">
+        Palate<span>.</span>
+      </div>
+
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#menu">Menu</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <button class="cart-btn" onclick="openCart()">
+        🛒 Cart <span id="cartCount">0</span>
+      </button>
+
+    </div>
+  </header>
+
+
+  <!-- =========================
+       HERO
+  ========================== -->
+  <main>
+
+    <section class="hero" id="home">
+
+      <div class="hero-content">
+
+        <h1>
+          Good food.<br>
+          <span>Good mood.</span>
+        </h1>
+
+        <p>
+          Discover delicious meals crafted with fresh ingredients,
+          bold flavors and a little love. Your next favorite dish
+          is waiting for you.
+        </p>
+
+        <div class="hero-buttons">
+          <button
+            class="primary-btn"
+            onclick="document.getElementById('menu').scrollIntoView()">
+            Explore Menu →
+          </button>
+
+          <button
+            class="secondary-btn"
+            onclick="showToast('Welcome to Palate! 🍴')">
+            Our Story
+          </button>
+        </div>
+
+      </div>
+
+      <div class="hero-image"></div>
+
+    </section>
+
+
+    <!-- =========================
+         MENU
+    ========================== -->
+    <section class="section" id="menu">
+
+      <div class="section-title">
+        <small>Fresh from our kitchen</small>
+        <h2>Our Favorites</h2>
+      </div>
+
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search for pizza, pasta, burger..."
+          oninput="searchFood()"
+        >
+      </div>
+
+      <div class="categories">
+
+        <button
+          class="category active"
+          onclick="filterFood('all', this)">
+          All
+        </button>
+
+        <button
+          class="category"
+          onclick="filterFood('pizza', this)">
+          🍕 Pizza
+        </button>
+
+        <button
+          class="category"
+          onclick="filterFood('burger', this)">
+          🍔 Burgers
+        </button>
+
+        <button
+          class="category"
+          onclick="filterFood('pasta', this)">
+          🍝 Pasta
+        </button>
+
+        <button
+          class="category"
+          onclick="filterFood('salad', this)">
+          🥗 Salads
+        </button>
+
+        <button
+          class="category"
+          onclick="filterFood('dessert', this)">
+          🍰 Dessert
+        </button>
+
+      </div>
+
+      <div class="food-grid" id="foodGrid"></div>
+
+    </section>
+
+
+    <!-- =========================
+         ABOUT
+    ========================== -->
+    <section class="about" id="about">
+
+      <div class="about-inner">
+
+        <div class="about-image"></div>
+
+        <div class="about-content">
+
+          <small>Our philosophy</small>
+
+          <h2>Simple ingredients. Big flavors.</h2>
+
+          <p>
+            At Palate, we believe food should be colorful, comforting
+            and memorable. We source quality ingredients and turn them
+            into dishes that make every meal feel special.
+          </p>
+
+          <div class="stats">
+
+            <div class="stat">
+              <h3>25+</h3>
+              <p>Fresh dishes</p>
+            </div>
+
+            <div class="stat">
+              <h3>12k</h3>
+              <p>Happy customers</p>
+            </div>
+
+            <div class="stat">
+              <h3>4.9</h3>
+              <p>Customer rating</p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         NEWSLETTER
+    ========================== -->
+    <section class="newsletter" id="contact">
+
+      <h2>Stay hungry for more.</h2>
+
+      <p>
+        Get new dishes, special offers and delicious updates in your inbox.
+      </p>
+
+      <form class="newsletter-form" onsubmit="subscribe(event)">
+
+        <input
+          type="email"
+          placeholder="Your email address"
+          required
+        >
+
+        <button class="primary-btn" type="submit">
+          Subscribe
+        </button>
+
+      </form>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+  <footer>
+
+    <div class="logo">
+      Palate<span>.</span>
+    </div>
+
+    <p>
+      Made with ❤️ for people who love good food.
+    </p>
+
+    <p style="margin-top: 10px;">
+      © 2026 Palate. All rights reserved.
+    </p>
+
+  </footer>
+
+
+  <!-- =========================
+       CART MODAL
+  ========================== -->
+  <div class="cart-modal" id="cartModal">
+
+    <div class="cart-panel">
+
+      <div class="cart-header">
+
+        <h2>Your Cart</h2>
+
+        <button
+          class="close-cart"
+          onclick="closeCart()">
+          ×
+        </button>
+
+      </div>
+
+      <div id="cartItems"></div>
+
+      <div class="cart-total">
+        <span>Total</span>
+        <span>₹<span id="cartTotal">0</span></span>
+      </div>
+
+      <button
+        class="checkout"
+        onclick="checkout()">
+        Proceed to Checkout
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       TOAST
+  ========================== -->
+  <div class="toast" id="toast"></div>
+
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
+  <script>
+
+    const foods = [
+
+      {
+        id: 1,
+        name: "Margherita Pizza",
+        category: "pizza",
+        price: 299,
+        description: "Tomato, mozzarella, basil and extra virgin olive oil.",
+        image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=700&q=80",
+        badge: "Popular"
+      },
+
+      {
+        id: 2,
+        name: "Classic Cheeseburger",
+        category: "burger",
+        price: 249,
+        description: "Juicy beef patty, cheddar, lettuce and house sauce.",
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=700&q=80",
+        badge: "Best Seller"
+      },
+
+      {
+        id: 3,
+        name: "Creamy Alfredo Pasta",
+        category: "pasta",
+        price: 279,
+        description: "Silky parmesan cream sauce with herbs and pasta.",
+        image: "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=700&q=80",
+        badge: "Chef's Pick"
+      },
+
+      {
+        id: 4,
+        name: "Garden Fresh Salad",
+        category: "salad",
+        price: 199,
+        description: "Fresh greens, tomatoes, cucumber, feta and dressing.",
+        image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=700&q=80",
+        badge: "Healthy"
+      },
+
+      {
+        id: 5,
+        name: "Truffle Mushroom Pizza",
+        category: "pizza",
+        price: 399,
+        description: "Roasted mushrooms, mozzarella and fragrant truffle oil.",
+        image: "https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=700&q=80",
+        badge: "Premium"
+      },
+
+      {
+        id: 6,
+        name: "Crispy Chicken Burger",
+        category: "burger",
+        price: 279,
+        description: "Crispy chicken, lettuce, pickles and creamy sauce.",
+        image: "https://images.unsplash.com/photo-1615297928064-24977384d0c6?auto=format&fit=crop&w=700&q=80",
+        badge: "Hot"
+      },
+
+      {
+        id: 7,
+        name: "Pesto Penne",
+        category: "pasta",
+        price: 259,
+        description: "Basil pesto, parmesan, cherry tomatoes and penne.",
+        image: "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=700&q=80",
+        badge: "Fresh"
+      },
+
+      {
+        id: 8,
+        name: "Chocolate Lava Cake",
+        category: "dessert",
+        price: 179,
+        description: "Warm chocolate cake with a rich molten center.",
+        image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=700&q=80",
+        badge: "Sweet"
+      },
+
+      {
+        id: 9,
+        name: "Berry Cheesecake",
+        category: "dessert",
+        price: 199,
+        description: "Creamy cheesecake topped with fresh seasonal berries.",
+        image: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=700&q=80",
+        badge: "New"
+      }
+
+    ];
+
+
+    let cart = [];
+
+    let currentCategory = "all";
+
+
+    /* =========================
+       DISPLAY FOOD
+    ========================== */
+
+    function displayFoods(list) {
+
+      const grid = document.getElementById("foodGrid");
+
+      if (list.length === 0) {
+
+        grid.innerHTML = `
+          <div style="
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px;
+            color: #8b8177;
+          ">
+            <h3>No dishes found 🍽️</h3>
+            <p>Try another search.</p>
+          </div>
+        `;
+
+        return;
+      }
+
+
+      grid.innerHTML = list.map(food => `
+
+        <article class="food-card">
+
+          <div class="food-image">
+
+            <img
+              src="${food.image}"
+              alt="${food.name}"
+              loading="lazy"
+            >
+
+            <span class="badge">
+              ${food.badge}
+            </span>
+
+          </div>
+
+          <div class="food-info">
+
+            <h3>${food.name}</h3>
+
+            <p>
+              ${food.description}
+            </p>
+
+            <div class="food-bottom">
+
+              <span class="price">
+                ₹${food.price}
+              </span>
+
+              <button
+                class="add-btn"
+                onclick="addToCart(${food.id})"
+                aria-label="Add ${food.name} to cart">
+                +
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      `).join("");
+
+    }
+
+
+    /* =========================
+       FILTER
+    ========================== */
+
+    function filterFood(category, button) {
+
+      currentCategory = category;
+
+      document
+        .querySelectorAll(".category")
+        .forEach(btn => btn.classList.remove("active"));
+
+      button.classList.add("active");
+
+      searchFood();
+
+    }
+
+
+    /* =========================
+       SEARCH
+    ========================== */
+
+    function searchFood() {
+
+      const query =
+        document
+          .getElementById("searchInput")
+          .value
+          .toLowerCase()
+          .trim();
+
+
+      const filtered = foods.filter(food => {
+
+        const matchesCategory =
+          currentCategory === "all" ||
+          food.category === currentCategory;
+
+        const matchesSearch =
+          food.name.toLowerCase().includes(query) ||
+          food.description.toLowerCase().includes(query);
+
+        return matchesCategory && matchesSearch;
+
+      });
+
+
+      displayFoods(filtered);
+
+    }
+
+
+    /* =========================
+       ADD TO CART
+    ========================== */
+
+    function addToCart(id) {
+
+      const food = foods.find(item => item.id === id);
+
+      const existing = cart.find(item => item.id === id);
+
+      if (existing) {
+        existing.quantity++;
+      } else {
+        cart.push({
+          ...food,
+          quantity: 1
+        });
+      }
+
+      updateCart();
+
+      showToast(`${food.name} added to cart 🛒`);
+
+    }
+
+
+    /* =========================
+       REMOVE FROM CART
+    ========================== */
+
+    function removeFromCart(id) {
+
+      cart = cart.filter(item => item.id !== id);
+
+      updateCart();
+
+    }
+
+
+    /* =========================
+       UPDATE CART
+    ========================== */
+
+    function updateCart() {
+
+      const cartItems =
+        document.getElementById("cartItems");
+
+      const cartCount =
+        document.getElementById("cartCount");
+
+      const cartTotal =
+        document.getElementById("cartTotal");
+
+
+      const totalItems =
+        cart.reduce(
+          (sum, item) => sum + item.quantity,
+          0
+        );
+
+
+      const totalPrice =
+        cart.reduce(
+          (sum, item) =>
+            sum + item.price * item.quantity,
+          0
+        );
+
+
+      cartCount.textContent = totalItems;
+
+      cartTotal.textContent = totalPrice;
+
+
+      if (cart.length === 0) {
+
+        cartItems.innerHTML = `
+          <div class="empty-cart">
+            <div style="font-size:50px;">🛒</div>
+            <h3>Your cart is empty</h3>
+            <p>Add something delicious!</p>
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      cartItems.innerHTML = cart.map(item => `
+
+        <div class="cart-item">
+
+          <img
+            src="${item.image}"
+            alt="${item.name}"
+          >
+
+          <div class="cart-item-info">
+
+            <h4>${item.name}</h4>
+
+            <p>
+              ₹${item.price} × ${item.quantity}
+            </p>
+
+          </div>
+
+          <button
+            class="remove-item"
+            onclick="removeFromCart(${item.id})">
+            ✕
+          </button>
+
+        </div>
+
+      `).join("");
+
+    }
+
+
+    /* =========================
+       OPEN CART
+    ========================== */
+
+    function openCart() {
+
+      document
+        .getElementById("cartModal")
+        .classList.add("show");
+
+      updateCart();
+
+    }
+
+
+    /* =========================
+       CLOSE CART
+    ========================== */
+
+    function closeCart() {
+
+      document
+        .getElementById("cartModal")
+        .classList.remove("show");
+
+    }
+
+
+    /* =========================
+       CHECKOUT
+    ========================== */
+
+    function checkout() {
+
+      if (cart.length === 0) {
+
+        showToast("Your cart is empty!");
+
+        return;
+
+      }
+
+
+      showToast("Order placed successfully! 🎉");
+
+      cart = [];
+
+      updateCart();
+
+      setTimeout(closeCart, 1200);
+
+    }
+
+
+    /* =========================
+       NEWSLETTER
+    ========================== */
+
+    function subscribe(event) {
+
+      event.preventDefault();
+
+      showToast("Thanks for subscribing! 💌");
+
+      event.target.reset();
+
+    }
+
+
+    /* =========================
+       TOAST MESSAGE
+    ========================== */
+
+    let toastTimer;
+
+    function showToast(message) {
+
+      const toast =
+        document.getElementById("toast");
+
+      toast.textContent = message;
+
+      toast.classList.add("show");
+
+      clearTimeout(toastTimer);
+
+      toastTimer = setTimeout(() => {
+
+        toast.classList.remove("show");
+
+      }, 2500);
+
+    }
+
+
+    /* =========================
+       CLOSE CART ON BACKDROP
+    ========================== */
+
+    document
+      .getElementById("cartModal")
+      .addEventListener("click", function(event) {
+
+        if (event.target === this) {
+          closeCart();
+        }
+
+      });
+
+
+    /* =========================
+       INITIAL LOAD
+    ========================== */
+
+    displayFoods(foods);
+
+    updateCart();
+
+  </script>
+
+</body>
+</html>
